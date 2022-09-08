@@ -1,0 +1,161 @@
+Text File questions
+
+
+
+Problem 01: Sample Paragraphs
+
+
+
+- Which functions from utils.py will you use for interacting with the sample_paragraphs.txt file?
+
+We must open the file, lines_from_file using open(path, mode = ‘r’)
+Then we call readable(lines_from_file) to see if the stream can be read from.
+If this function returns True, call readlines(lines_from_file).
+
+Open the file, new_sample using open(path, mode = ‘r’)
+Then call readable(new_sample) to see if the stream can be read from.
+If this function returns True, call readline(new_sample).
+Readline(s) is not called because new_sample only wants to return the paragraph in the ith line of the file.
+
+
+
+
+Problem 02: Words Per Minute
+
+
+
+- Given a long string that contains a full paragraph (e.g. "This is my name. It is Bob. Also, I have a cat named Troy."), what function will you use to separate a string containing a full paragraph into its individual words?
+
+split(s, sep=None)
+We set sep = None. Therefore, whitespace is considered the separator between words.
+
+
+
+
+
+- What is the calculation you will use in order to measure Words Per Minute speed? (You can describe your formula.)
+
+It will be the number of characters // 5
+This will work in conjunction with analyze which has a number start_time and a number end_time
+
+
+- What is the calculation you will use in order to measure accuracy? (You can describe your formula.)
+
+words typed correctly in typed text divided by words in the reference string
+
+
+Problem 03: Pig Latin
+
+
+
+- How will you identify that a word starts with a consonant cluster?
+
+Create a list of “a e i o u” and compare them to the first letter(s) of the elements in the string. If they == the
+list of vowels, carry Rule Two out, else carry out the Rule One. If Rule One is applied, we will calculate the amount
+of consonants before the first vowel. For consonant cases, add “ay” to the end, and for vowel cases add “way” to the end.
+* note When it begins with more than one consonant, it is considered a consonant cluster.
+
+
+Problem 04: Autocorrect Skeleton
+
+
+
+- How will you calculate the difference scores between the user input string and each valid word, and determine which difference is the smallest?
+We will make a list that has all of the outputs of the score_function which are numbers that represent the difference between the user_input
+and all of the possible words from words_list.
+Then we will input this list into a function called key_of_min_value which takes in this list and returns the minimum value or smallest difference.
+
+Problem 05: Score Function
+
+
+
+- What will your base case be?
+
+It will be if the first string and the second string are exactly the same. That means that 0 characters
+would need to be swapped.
+
+
+- Identify two example inputs which fall into different recursive calls. In each of these cases, what recursive call should be made?
+Example 1: swap_score("nice", "rice")
+These make different recursive calls because for example one, no recursive call is made because the first letter is the only difference.
+Example 2: swap_score("range", "rungs")
+For example 2, the first letter is the same, so we need to make a recursive call of swap_score so that the second letter is evaluated.
+
+
+
+
+
+Problem 06:
+
+
+
+- What does each of the recursive calls in the skeleton represent? Are there additional cases which don't fit into the three already given?
+
+All three of the recursive calls are operations that are returned to transform a word1 into word2.
+1. If word1 is longer than word2, delete letters
+2. If word1 is shorter than word2, add letters
+3. If word1 and word2 are the same length, but word2 has different letters than word1 use this operation to substitute a letter in word1
+for another.
+
+- If we called score_function("bot", "boot"), list a series of successive recursive calls we would go through to reach the base case. For example, if we called score_function("add", "aadd"), one step could be score_function("add", "aadd") -> score_function("add", "add").
+
+score_function("bot", "boot") -> score_function("boot", "boot")
+
+
+
+
+- Based on your above list of recursive calls, classify each step as an add, remove, a swap, or something else.
+
+Add
+
+
+
+
+
+- Why would your function choose this sequence of recursive calls over another?
+It is the minimum  number of operations that need to occur for word1 to match word2.
+
+Problem 07: Accuracy
+
+
+
+- In your own words, why do we need to improve the accuracy of our existing score_function? In other words, what is the problem that we are trying to solve?
+
+If you have two strings, one of them being the one that the user inputs, there can be several options to which this user input can autocorrect to. The word that is
+chosen to be the default autocorrect is based upon the typo letter's proximity to another letter that creates the new autocorrect word.
+
+
+
+- How can you adapt your score function from the previous problem to take into account key distances?
+ (Hint: which recursive call will need to be modified?)
+
+You should call the function score_function_accurate.
+
+
+
+Problem 08: Efficiency
+
+
+
+- What data structure will you use to store all of the differences that score_function has already calculated?
+
+
+We will use a memoization function to store the differences that score_function has already calculated. Memoize
+uses a dictionary, let’s call it memo to store the score_function results. We also use a helper function that
+carries out score_function while simultaneously storing the results.
+
+
+
+
+- What types of values will this data structure contain?
+
+The differences (integers) that score_function has already calculated.
+
+
+
+
+- Using the data structure you described, given a pair of words, how will you check whether score_function has already been called on that pair of words? If so, how will you access the already calculated difference?
+
+If score_function has already been called on the pair of words, then the previously calculated difference should be returned. This prevents the function from recalculating a difference that it has already calculated
+by referencing the dictionary. We will access the already calculated differences by referencing the dictionary we implemented where a pair of strings acts as a key and the difference between them (in this case a number)
+is its affiliated value.
